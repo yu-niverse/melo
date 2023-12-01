@@ -39,6 +39,7 @@ export const signup = async (username, email, password, avatar) => {
       {
         _id: roomID,
         name: "default",
+        type: "private",
         description: "Welcome to melo, this is your default room!",
         member_limit: 1,
         members: [userID],
