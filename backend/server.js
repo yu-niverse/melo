@@ -75,6 +75,7 @@ app.get("/healthcheck", (req, res) => {
 });
 
 app.use("/user", user);
+app.use("/room", room);
 
 
 process.on('SIGINT', terminate);

@@ -1,11 +1,11 @@
 import client from "../utils/mongo.js";
-import * as Room from "./room.js";
 import mongodb from "mongodb";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const db = client.db("melo");
 const userCollection = db.collection("users");
+const roomCollection = db.collection("rooms");
 
 export const signup = async (username, email, password, avatar) => {
   const session = client.startSession();
@@ -35,7 +35,7 @@ export const signup = async (username, email, password, avatar) => {
       { session }
     );
     // Create a default room for the user
-    await Room.add(
+    await roomCollection.insertOne(
       {
         _id: roomID,
         name: "default",
@@ -45,10 +45,10 @@ export const signup = async (username, email, password, avatar) => {
         members: [userID],
         created_at: new Date(),
       },
-      session
+      { session }
     );
     // Sign JWT token
-    const token = jwt.sign({ user_id: userID }, process.env.JSON_SIGN_SECRET, {
+    const token = jwt.sign({ userID: userID }, process.env.JSON_SIGN_SECRET, {
       expiresIn: "1h",
     });
     await session.commitTransaction();
@@ -79,13 +79,9 @@ export const login = async (email, password) => {
       throw new Error("Wrong email or password!");
     }
     // Sign JWT token
-    const token = jwt.sign(
-      { user_id: user._id },
-      process.env.JSON_SIGN_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
+    const token = jwt.sign({ userID: user._id }, process.env.JSON_SIGN_SECRET, {
+      expiresIn: "1h",
+    });
     return {
       id: user._id,
       name: user.username,
