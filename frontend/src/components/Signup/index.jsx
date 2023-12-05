@@ -2,11 +2,11 @@ import React from "react";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
-import { ReactComponent as UploadIcon } from "../../asserts/upload.svg";
-import { ReactComponent as UserIcon } from "../../asserts/user.svg";
-import { ReactComponent as EmailIcon } from "../../asserts/email.svg";
-import { ReactComponent as PasswordIcon } from "../../asserts/password.svg";
-import { ReactComponent as GoogleIcon } from "../../asserts/google.svg";
+import { ReactComponent as UploadIcon } from "../../assets/upload.svg";
+import { ReactComponent as UserIcon } from "../../assets/user.svg";
+import { ReactComponent as EmailIcon } from "../../assets/email.svg";
+import { ReactComponent as PasswordIcon } from "../../assets/password.svg";
+import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import IconButton from "@mui/material/IconButton";
 import "./Signup.css";
 
