@@ -1,0 +1,21 @@
+.horizontal-or {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1rem 0;
+
+    .or {
+        color: #F8F8EB;
+        font-size: 0.8rem;
+        font-weight: 400;
+        letter-spacing: 2.5px;
+        margin: 0 1.5rem;
+    }
+    
+    .line {
+        flex: 1;
+        height: 0.5px;
+        background: #F8F8EB;
+    }
+}

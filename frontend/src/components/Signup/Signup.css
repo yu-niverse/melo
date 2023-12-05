@@ -1,0 +1,78 @@
+#signup {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  background: linear-gradient(
+    180deg,
+    #333840 33.85%,
+    #46494b 60.9%,
+    #69685f 97.47%,
+    #f5e6b1 139.3%
+  );
+
+  #signup-container {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5rem;
+
+    .title {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .title-text {
+        color: #fdd18e;
+        text-shadow: 0px 4px 4px rgba(253, 209, 142, 0.3);
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: 1.75px;
+      }
+    }
+
+    .upload {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+
+      .upload-icon {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+        background: rgba(248, 248, 235, 0.05);
+      }
+
+      .upload-text {
+        color: #f8f8eb;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: 1.05px;
+        margin-left: 20px;
+      }
+    }
+
+    .login-button-text {
+      color: #fdd18e;
+      font-size: 1rem;
+      letter-spacing: 2.5px;
+    }
+
+    .google-icon {
+        margin-right: 20px;
+    }
+
+    .google-button-text {
+        color: #F8F8EB;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+  }
+}

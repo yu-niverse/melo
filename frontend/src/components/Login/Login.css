@@ -1,0 +1,29 @@
+#login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    #333840 33.85%,
+    #46494b 60.9%,
+    #69685f 97.47%,
+    #f5e6b1 139.3%
+  );
+
+  .title {
+    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .title-text {
+      color: #fdd18e;
+      text-shadow: 0px 4px 4px rgba(253, 209, 142, 0.3);
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: 1.75px;
+    }
+  }
+}
