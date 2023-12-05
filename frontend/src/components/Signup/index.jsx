@@ -14,6 +14,16 @@ const Signup = () => {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const hiddenFileInput = React.useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleFile = (event) => {
+    const fileUploaded = event.target.files[0];
+    console.log(fileUploaded);
+  };
 
   const handleContinue = () => {
     console.log(username, email, password);
@@ -30,7 +40,13 @@ const Signup = () => {
           <span className="title-text">Create Account</span>
         </div>
         <div className="upload">
-          <IconButton className="upload-icon">
+          <input
+            type="file"
+            ref={hiddenFileInput}
+            onChange={handleFile}
+            style={{ display: "none" }}
+          />
+          <IconButton className="upload-icon" onClick={handleClick}>
             <UploadIcon />
           </IconButton>
           <span className="upload-text">Upload your profile pic</span>
@@ -62,7 +78,9 @@ const Signup = () => {
         />
         <HorizontalOr />
         <OutlinedButton
-          text={<span className="google-button-text">Continue with Google</span>}
+          text={
+            <span className="google-button-text">Continue with Google</span>
+          }
           icon={<GoogleIcon className="google-icon" />}
           handleClick={handleGoogle}
         />

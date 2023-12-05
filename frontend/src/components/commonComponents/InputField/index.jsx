@@ -23,11 +23,18 @@ const InputField = (props) => {
       }}
       inputProps={{
         sx: {
+          color: "#F8F8EB",
+          letterSpacing: "0.5px",
+
           "&::placeholder": {
             color: "#F8F8EB",
             opacity: 1,
             fontSize: "15px",
-            letterSpacing: "2px",
+            letterSpacing: "1.5px",
+          },
+          "&:focus::placeholder": {
+            color: "#F8F8EB",
+            opacity: 0.3,
           },
         },
       }}
