@@ -16,7 +16,7 @@ const Signup = () => {
   const [password, setPassword] = React.useState("");
   const hiddenFileInput = React.useRef(null);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
