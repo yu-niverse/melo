@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffmpeg from 'fluent-ffmpeg';
 import user from './routes/user.js';
+import room from './routes/room.js';
 import { connect, close } from './utils/mongo.js';
 
 dotenv.config();
@@ -61,10 +62,28 @@ io.on('connection', (socket) => {
     console.log('end');
   }).run();
 
-  socket.emit('playAudio', '/hls.m3u8');
+  socket.on('loadAudio', () => {
+    console.log('loadAudio');
+    io.emit('loadAudio', '/hls.m3u8');
+  });
+
+  socket.on('playAudio', () => {
+    console.log('playAudio');
+    io.emit('playAudio');
+  });
+
+  socket.on('pauseAudio', () => {
+    console.log('pauseAudio');
+    io.emit('pauseAudio');
+  });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('seekAudio', (position) => {
+    console.log('seekAudio');
+    io.emit('seekAudio', position);
   });
 });
 

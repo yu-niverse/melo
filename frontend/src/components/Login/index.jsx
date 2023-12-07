@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
@@ -8,15 +9,21 @@ import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleLogin = () => {
     console.log(email, password);
+    navigateToPlay();
   };
 
   const handleGoogle = () => {
     console.log("Continue with Google");
+  };
+
+  const navigateToPlay = () => {
+    navigate("/play");
   };
 
   return (

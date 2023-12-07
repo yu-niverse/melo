@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
@@ -11,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import "./Signup.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -27,7 +29,12 @@ const Signup = () => {
 
   const handleContinue = () => {
     console.log(username, email, password);
+    navigateToLogin();
   };
+
+  const navigateToLogin = () => {
+    navigate("/login");
+  }
 
   const handleGoogle = () => {
     console.log("Continue with Google");
