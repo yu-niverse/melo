@@ -13,13 +13,11 @@ export const signup = async (req, res) => {
     if (!checkEmail(email)) {
       return res.status(400).send("Invalid email format");
     }
-    let avatar = req.file.location;
-    const info = await User.signup(username, email, password, avatar);
+    const info = await User.signup(username, email, password);
     res.status(200).json({
       data: {
-        token: info.token,
-        user_id: info.userID,
-        room_id: info.roomID,
+        userID: info.userID,
+        roomID: info.roomID,
       },
     });
   } catch (err) {
@@ -44,12 +42,41 @@ export const login = async (req, res) => {
   } catch (err) {
     console.log(err);
     if (err.message === "Wrong email or password!") {
-      return res.status(403).send(err.message);
+      return res.status(401).send(err.message);
     }
     res.status(500).json({ error: err });
   }
 };
 
 export const getProfile = async (req, res) => {
-  res.send("Profile");
+  try {
+    const userID = req.user.userID;
+    const user = await User.getProfile(userID);
+    res.status(200).json({
+      data: user,
+    });
+  } catch (err) {
+    console.log(err);
+    if (err.message === "User does not exist!") {
+      return res.status(400).send(err.message);
+    }
+    res.status(500).json({ error: err });
+  }
+};
+
+export const updateAvatar = async (req, res) => {
+  try {
+    const avatar = req.file.location;
+    const userID = req.user.userID;
+    const user = await User.updateAvatar(userID, avatar);
+    res.status(200).json({
+      data: user,
+    });
+  } catch (err) {
+    console.log(err);
+    if (err.message === "User does not exist!") {
+      return res.status(400).send(err.message);
+    }
+    res.status(500).json({ error: err });
+  }
 };

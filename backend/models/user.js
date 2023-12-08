@@ -7,7 +7,7 @@ const db = client.db("melo");
 const userCollection = db.collection("users");
 const roomCollection = db.collection("rooms");
 
-export const signup = async (username, email, password, avatar) => {
+export const signup = async (username, email, password) => {
   const session = client.startSession();
   session.startTransaction();
   try {
@@ -28,38 +28,34 @@ export const signup = async (username, email, password, avatar) => {
         username: username,
         email: email,
         password: hash,
-        avatar: avatar,
         rooms: [roomID],
         created_at: new Date(),
       },
       { session }
     );
     // Create a default room for the user
+    const description = "Hi " + username + ", Welcome to melo, this is your default room!";
     await roomCollection.insertOne(
       {
         _id: roomID,
-        name: "default",
+        name: "Default",
         type: "private",
-        description: "Welcome to melo, this is your default room!",
+        description: description,
         member_limit: 1,
         members: [userID],
+        queue: [],
+        playlists: [],
         created_at: new Date(),
       },
       { session }
     );
-    // Sign JWT token
-    const token = jwt.sign({ userID: userID }, process.env.JSON_SIGN_SECRET, {
-      expiresIn: "1h",
-    });
     await session.commitTransaction();
     session.endSession();
     return {
-      token: token,
       userID: userID,
       roomID: roomID,
     };
   } catch (err) {
-    console.log(err);
     await session.abortTransaction();
     session.endSession();
     throw err;
@@ -85,11 +81,9 @@ export const login = async (email, password) => {
     return {
       id: user._id,
       name: user.username,
-      avatar: user.avatar,
       token: token,
     };
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };
@@ -97,20 +91,36 @@ export const login = async (email, password) => {
 export const getProfile = async (userID) => {
   try {
     // Check if user exists
-    const user = await userCollection.findOne({ _id: userID });
+    const id = new mongodb.ObjectId(userID);
+    const user = await userCollection.findOne({ _id: id });
     if (!user) {
       throw new Error("User does not exist!");
     }
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateAvatar = async (userID, avatar) => {
+  try {
+    // Check if user exists
+    const id = new mongodb.ObjectId(userID);
+    const user = await userCollection.findOne({ _id: id });
+    if (!user) {
+      throw new Error("User does not exist!");
+    }
+    // Update avatar
+    await userCollection.updateOne(
+      { _id: id },
+      { $set: { avatar: avatar } }
+    );
     return {
       id: user._id,
       name: user.username,
-      email: user.email,
-      avatar: user.avatar,
-      rooms: user.rooms,
-      created_at: user.created_at,
+      avatar: avatar,
     };
   } catch (err) {
-    console.log(err);
     throw err;
   }
 };

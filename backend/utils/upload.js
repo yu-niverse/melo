@@ -19,7 +19,7 @@ const s3Storage = multerS3({
   bucket: "melo-app",
 });
 
-function checkFileType(file, cb) {
+function checkImageType(file, cb) {
   const fileExts = [".png", ".jpg", ".jpeg"];
   const isAllowedExt = fileExts.includes(
       path.extname(file.originalname.toLowerCase())
@@ -32,14 +32,19 @@ function checkFileType(file, cb) {
   }
 }
 
-const upload = multer({
+export const uploadImage = multer({
   storage: s3Storage,
   fileFilter: (req, file, callback) => {
-      checkFileType(file, callback)
+      checkImageType(file, callback)
   },
   limits: {
       fileSize: 1024 * 1024 * 2, // 2MB
   }
 })
 
-export default upload;
+export const uploadAudio = multer({
+  storage: s3Storage,
+  limits: {
+      fileSize: 1024 * 1024 * 5, // 5MB
+  }
+})

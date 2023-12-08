@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import HLS from "hls.js";
-const URL = "http://192.168.0.101:4000";
-export const socket = io(URL);
 
 const Audio = () => {
+  
+  const URL = "http://192.168.31.230:4000";
+  const socket = io(URL);
+  
   const [load, setLoad] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -39,7 +41,7 @@ const Audio = () => {
 
     // Event listener for receiving the HLS stream URL from the server
     socket.on("loadAudio", (path) => {
-      path = "http://192.168.0.101:4000" + path;
+      path = "http://192.168.31.230:4000" + path;
       console.log("load audio");
       console.log(path);
       if (HLS.isSupported()) {
@@ -78,7 +80,7 @@ const Audio = () => {
     return () => {
       test.removeEventListener("timeupdate", handleTimeUpdate);
     }
-  }, []);
+  }, [socket]);
 
   return (
     <div>

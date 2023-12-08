@@ -1,6 +1,6 @@
 import express from 'express';
 import { authentication } from '../utils/auth.js';
-import { createRoom, getRoom, getRooms, getRoomsByUser, getPublicRooms, updateRoom, joinRoom, leaveRoom, deleteRoom } from '../controllers/room.js';
+import { createRoom, getRoom, getRooms, getRoomsByUser, joinRoom, leaveRoom } from '../controllers/room.js';
 
 const room = express.Router();
 
@@ -10,11 +10,8 @@ room.use(express.json());
 room.use(authentication);
 room.post('/', createRoom);
 room.get('/', getRoomsByUser);
-room.post('/join/:roomID', joinRoom);
-room.post('/leave/:roomID', leaveRoom);
-room.get('/public', getPublicRooms);
+room.post('/:roomID', joinRoom);
+room.delete('/:roomID', leaveRoom);
 room.get('/:roomID', getRoom);
-room.put('/:roomID', updateRoom);
-room.delete('/:roomID', deleteRoom);
 
 export default room;
