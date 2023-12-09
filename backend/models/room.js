@@ -17,7 +17,14 @@ export const create = async (input, userID) => {
       member_limit: input.member_limit,
       members: [new mongodb.ObjectId(userID)],
       queue: [],
-      playlists: [],
+      playlists: [
+        {
+          _id: new mongodb.ObjectId(),
+          name: "Default Playlist",
+          description: "Default playlist",
+          songs: [],
+        },
+      ],
       created_at: new Date(),
     };
     const result = await roomCollection.insertOne(room, { session });

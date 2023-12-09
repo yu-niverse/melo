@@ -7,6 +7,7 @@ import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffmpeg from 'fluent-ffmpeg';
 import user from './routes/user.js';
 import room from './routes/room.js';
+import playlist from './routes/playlist.js';
 import song from './routes/song.js';
 import { connect, close } from './utils/mongo.js';
 
@@ -96,6 +97,7 @@ app.get("/healthcheck", (req, res) => {
 
 app.use("/user", user);
 app.use("/room", room);
+app.use("/list", playlist);
 app.use("/song", song);
 
 process.on('SIGINT', terminate);

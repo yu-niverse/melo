@@ -44,7 +44,14 @@ export const signup = async (username, email, password) => {
         member_limit: 1,
         members: [userID],
         queue: [],
-        playlists: [],
+        playlists: [
+          {
+            _id: new mongodb.ObjectId(),
+            name: "Default Playlist",
+            description: "Default playlist",
+            songs: [],
+          },
+        ],
         created_at: new Date(),
       },
       { session }

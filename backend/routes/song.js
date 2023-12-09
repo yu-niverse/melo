@@ -1,6 +1,8 @@
 import express from 'express';
+import { authentication } from '../utils/auth.js';
 import { uploadAudio } from '../utils/upload.js';
-import { uploadSong, getSongs, getSong, deleteSong } from '../controllers/song.js';
+import { uploadSong, getSongs, getSong } from '../controllers/song.js';
+import { addToQueue, removeFromQueue, getQueue, clearQueue, updateQueue } from '../controllers/song.js';
 
 const song = express.Router();
 
@@ -11,7 +13,11 @@ song.post('/', uploadAudio.single('audio'), (req, res) => {
   uploadSong(req, res);
 });
 song.get('/', getSongs);
+song.use(authentication);
 song.get('/:songID', getSong);
-song.delete('/:songID', deleteSong);
+song.post('/queue/:roomID/:songID', addToQueue);
+song.get('/queue/:roomID', getQueue);
+song.delete('/queue/:roomID', clearQueue);
+song.put('/queue/:roomID', updateQueue);
 
 export default song;

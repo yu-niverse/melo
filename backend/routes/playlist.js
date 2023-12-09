@@ -7,10 +7,12 @@ const playlist = express.Router();
 // Playlists API
 playlist.use(express.json());
 playlist.use(authentication);
-playlist.post("/", createPlaylist);
-playlist.get("/", getPlaylists);
-playlist.get("/:roomID/:playlistID", getPlaylist);
-playlist.delete("/:roomID/:playlistID", deletePlaylist);
-playlist.put("/:roomID/:playlistID", updatePlaylist);
-playlist.post("/:roomID/:playlistID/:songID", addSong);
-playlist.delete("/:roomID/:playlistID/:songID", removeSong);
+playlist.get("/room/:roomID", getPlaylists);
+playlist.post("/room/:roomID", createPlaylist);
+playlist.get("/:roomID/:listID", getPlaylist);
+playlist.put("/:roomID/:listID", updatePlaylist);
+playlist.delete("/:roomID/:listID", deletePlaylist);
+playlist.post("/:roomID/:listID/:songID", addSong);
+playlist.delete("/:roomID/:listID/:songID", removeSong);
+
+export default playlist;
