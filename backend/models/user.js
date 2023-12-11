@@ -83,12 +83,13 @@ export const login = async (email, password) => {
     }
     // Sign JWT token
     const token = jwt.sign({ userID: user._id }, process.env.JSON_SIGN_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     return {
       id: user._id,
       name: user.username,
       token: token,
+      default_room: user.rooms[0],
     };
   } catch (err) {
     throw err;

@@ -17,6 +17,7 @@ const s3 = new S3Client({
 const s3Storage = multerS3({
   s3: s3,
   bucket: "melo-app",
+  acl: "public-read",
 });
 
 function checkImageType(file, cb) {
