@@ -9,7 +9,6 @@ export const useUserSignup = () => {
     return useMutation(UserSignup, {
         onSuccess: (data) => {
             console.log(data.data);
-            alert("Signup success!");
             navigate("/login");
         },
         onError: (error) => {
@@ -26,7 +25,6 @@ export const useUserLogin = () => {
     return useMutation(UserLogin, {
         onSuccess: (data) => {
             console.log(data.data);
-            alert("Login Success!");
             setToken(data.data.token);
             navigate(`/room/${data.data.default_room}`);
         },

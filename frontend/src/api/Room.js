@@ -9,3 +9,12 @@ export const GetRoomInfo = async (roomID) => {
   });
   return response.data.data;
 };
+
+export const GetRooms = async () => {
+  const response = await axios({
+    method: "GET",
+    url: API.room,
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data.data;
+}

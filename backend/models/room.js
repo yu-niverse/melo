@@ -70,8 +70,10 @@ export const getRoom = async (roomID, userID) => {
       .toArray();
     room.members = members.map((member) => member.username);
     room.othermembers = room.members.filter(
-      (member) => member !== user.username
+      member => member !== user.username
     );
+    console.log(room.othermembers);
+    console.log(user.username);
     return room;
   } catch (err) {
     throw err;

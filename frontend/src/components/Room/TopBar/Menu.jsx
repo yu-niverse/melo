@@ -4,25 +4,7 @@ import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const Menu = (props) => {
-  const { openMenu, setOpenMenu } = props;
-
-  const roomList = [
-    {
-      id: 1,
-      title: "Default Room",
-      member: 1,
-    },
-    {
-      id: 2,
-      title: "PopTogether",
-      member: 5,
-    },
-    {
-      id: 3,
-      title: "Pop Love",
-      member: 2,
-    },
-  ];
+  const { openMenu, setOpenMenu, roomList } = props;
 
   return (
     <Drawer anchor="left" open={openMenu} onClose={() => setOpenMenu(false)}>
@@ -31,17 +13,17 @@ const Menu = (props) => {
         <div className="room-container">
           {roomList.map((room) => (
             <MenuItem
-              key={room.id}
-              title={room.title}
+              key={room._id}
+              title={room.name}
               avatar={
                 <div className="avatar-box menu-avatar">
-                  <span>{room.title[0]}</span>
+                  <span>{room.name[0]}</span>
                 </div>
               }
               subTitle={
-                <span className="menu-subtitle">{`${room.member} member`}</span>
+                <span className="menu-subtitle">{`${room.members.length}/${room.member_limit} members`}</span>
               }
-              link={`/room/${room.id}`}
+              link={`/room/${room._id}`}
               setOpenMenu={setOpenMenu}
             />
           ))}
