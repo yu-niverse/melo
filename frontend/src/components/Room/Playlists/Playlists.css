@@ -1,0 +1,38 @@
+#playlists {
+    width: 100%;
+    height: 77.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 1rem;
+
+    .playlists-title {
+        color: #F8F8EB;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.84px;
+        margin: 8px;
+    }
+
+    .playlists-container {
+        width: calc(100% - 16px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin: 8px 8px 0;
+        overflow-y: scroll;
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;
+
+        .playlist {
+            margin-bottom: 1.2rem;
+        }
+    }
+
+    .playlists-container::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
+}

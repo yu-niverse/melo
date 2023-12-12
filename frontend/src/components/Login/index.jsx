@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useUserLogin } from "../../hooks/useUserLogin";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
@@ -9,21 +9,18 @@ import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
 import "./Login.css";
 
 const Login = () => {
-  const navigate = useNavigate();
+
+  const mutation = useUserLogin();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleLogin = () => {
     console.log(email, password);
-    navigateToPlay();
+    mutation.mutate({ email, password });
   };
 
   const handleGoogle = () => {
     console.log("Continue with Google");
-  };
-
-  const navigateToPlay = () => {
-    navigate("/play");
   };
 
   return (
@@ -36,14 +33,14 @@ const Login = () => {
           required={true}
           type="email"
           placeholder="Email"
-          onChange={setEmail}
+          onChange={(e) => setEmail(e.target.value)}
           icon={<EmailIcon />}
         />
         <InputField
           required={true}
           type="password"
           placeholder="Password"
-          onChange={setPassword}
+          onChange={(e) => setPassword(e.target.value)}
           icon={<PasswordIcon />}
         />
         <OutlinedButton

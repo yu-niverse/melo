@@ -4,6 +4,7 @@ import * as User from "../models/user.js";
 export const signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    console.log("body:", req.body);
     if (!username || !email || !password) {
       return res.status(400).send("All fields are required");
     }
@@ -32,6 +33,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("body:", req.body);
     if (!email || !password) {
       return res.status(400).send("All fields are required");
     }

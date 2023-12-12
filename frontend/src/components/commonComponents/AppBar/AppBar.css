@@ -1,0 +1,33 @@
+#app-bar {
+    height: 3.5rem;
+    width: 100%;
+    background: rgba(40, 44, 50, 0.85);
+
+    .tab {
+        color: #F8F8EB;
+        text-transform: none;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.7px;
+        justify-content: flex-start;
+
+        &>svg>path {
+            stroke: #F8F8EB;
+        }
+    }
+
+    .tab-selected {
+        color: #FDD18E;
+        text-transform: none;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0.7px;
+        justify-content: flex-start;
+
+        &>svg>path {
+            stroke: #FDD18E;
+        }
+    }
+}

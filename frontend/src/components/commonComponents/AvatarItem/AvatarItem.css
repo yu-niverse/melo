@@ -1,0 +1,86 @@
+.avatar-item-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.front-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.avatar-box {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.menu-avatar {
+    background-color: #2E2F32;
+}
+
+.playlist-avatar {
+    color: #F8F8EB;
+    background-color: rgba(248, 248, 235, 0.08);
+}
+
+.panel-avatar {
+    width: 40px;
+    height: 40px;
+    font-weight: 400;
+    color: #F8F8EB;
+    background-color: rgba(248, 248, 235, 0.08);
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .item-name {
+        color: #F8F8EB;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1.05px;
+    }
+
+    .panel-item-name {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .playing-title-name {
+        color: #FDD18E;
+    }
+
+    .menu-subtitle {
+        color: #FDD18E;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.84px;
+    }
+
+    .playlist-subtitle {
+        color: rgba(248, 248, 235, 0.60);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.84px;
+    }
+
+    .panel-subtitle {
+        color: rgba(253, 209, 142, 0.70);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+    }
+}

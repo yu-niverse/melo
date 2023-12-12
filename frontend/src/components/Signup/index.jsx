@@ -1,40 +1,24 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
-import { ReactComponent as UploadIcon } from "../../assets/upload.svg";
+import { useUserSignup } from "../../hooks/useUserSignup";
 import { ReactComponent as UserIcon } from "../../assets/user.svg";
 import { ReactComponent as EmailIcon } from "../../assets/email.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/password.svg";
 import { ReactComponent as GoogleIcon } from "../../assets/google.svg";
-import IconButton from "@mui/material/IconButton";
 import "./Signup.css";
 
 const Signup = () => {
-  const navigate = useNavigate();
+  const mutation = useUserSignup();
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const hiddenFileInput = React.useRef(null);
-
-  const handleClick = () => {
-    hiddenFileInput.current.click();
-  };
-
-  const handleFile = (event) => {
-    const fileUploaded = event.target.files[0];
-    console.log(fileUploaded);
-  };
 
   const handleContinue = () => {
     console.log(username, email, password);
-    navigateToLogin();
+    mutation.mutate({ username, email, password });
   };
-
-  const navigateToLogin = () => {
-    navigate("/login");
-  }
 
   const handleGoogle = () => {
     console.log("Continue with Google");
@@ -46,37 +30,25 @@ const Signup = () => {
         <div className="title">
           <span className="title-text">Create Account</span>
         </div>
-        <div className="upload">
-          <input
-            type="file"
-            ref={hiddenFileInput}
-            onChange={handleFile}
-            style={{ display: "none" }}
-          />
-          <IconButton className="upload-icon" onClick={handleClick}>
-            <UploadIcon />
-          </IconButton>
-          <span className="upload-text">Upload your profile pic</span>
-        </div>
         <InputField
           required={true}
           type="text"
           placeholder="Username"
-          onChange={setUsername}
+          onChange={(e) => setUsername(e.target.value)}
           icon={<UserIcon />}
         />
         <InputField
           required={true}
           type="email"
           placeholder="Email"
-          onChange={setEmail}
+          onChange={(e) => setEmail(e.target.value)}
           icon={<EmailIcon />}
         />
         <InputField
           required={true}
           type="password"
           placeholder="Password"
-          onChange={setPassword}
+          onChange={(e) => setPassword(e.target.value)}
           icon={<PasswordIcon />}
         />
         <OutlinedButton
@@ -95,4 +67,5 @@ const Signup = () => {
     </div>
   );
 };
+
 export default Signup;
