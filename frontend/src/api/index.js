@@ -5,4 +5,5 @@ export const API = {
   login: `${BASE_URL}/user/login`,
   userinfo: `${BASE_URL}/user/profile`,
   room: `${BASE_URL}/room`,
+  playlist: `${BASE_URL}/list/room`,
 };
