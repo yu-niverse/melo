@@ -9,6 +9,9 @@ export const create = async (input, userID) => {
   const session = client.startSession();
   session.startTransaction();
   try {
+    const user = await userCollection.findOne({
+      _id: new mongodb.ObjectId(userID),
+    });
     const room = {
       _id: new mongodb.ObjectId(),
       name: input.name,
@@ -23,6 +26,7 @@ export const create = async (input, userID) => {
           name: "Default Playlist",
           description: "Default playlist",
           songs: [],
+          added_by: user.username,
         },
       ],
       created_at: new Date(),

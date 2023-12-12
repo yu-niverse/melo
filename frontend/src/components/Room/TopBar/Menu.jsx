@@ -61,7 +61,7 @@ const Menu = (props) => {
         </div>
         <div className="invitation">
           <QrCode2RoundedIcon className="qrcode-icon" />
-          <span className="text">Sacn Invitation</span>
+          <span className="text">Scan Invitation</span>
         </div>
       </div>
     </Drawer>

@@ -9,7 +9,7 @@ const Playlists = (props) => {
         <div className="playlists-title">Your Playlists</div>
         <div className="playlists-container">
             {playlists.map((playlist, index) => (
-                <Playlist key={index} title={playlist.title} creator={playlist.creator} />
+                <Playlist key={index} title={playlist.name} creator={playlist.added_by} />
             ))}
         </div>
     </div>

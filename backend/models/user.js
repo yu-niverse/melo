@@ -50,6 +50,7 @@ export const signup = async (username, email, password) => {
             name: "Default Playlist",
             description: "Default playlist",
             songs: [],
+            added_by: username,
           },
         ],
         created_at: new Date(),
