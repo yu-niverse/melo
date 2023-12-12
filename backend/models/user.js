@@ -44,6 +44,7 @@ export const signup = async (username, email, password) => {
         member_limit: 1,
         members: [userID],
         queue: [],
+        current_song: null,
         playlists: [
           {
             _id: new mongodb.ObjectId(),

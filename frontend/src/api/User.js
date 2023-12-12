@@ -20,3 +20,12 @@ export const UserLogin = async (user) => {
   });
   return response.data;
 };
+
+export const GetUserInfo = async () => {
+  const response = await axios({
+    method: "GET",
+    url: API.userinfo,
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data.data;
+}

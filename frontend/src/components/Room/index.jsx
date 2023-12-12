@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetRoomInfo } from "../../hooks/useGetRoomInfo";
+import { useGetUserInfo } from "../../hooks/useUser";
+import { useGetRoomInfo } from "../../hooks/useRoom";
 import TopBar from "./TopBar";
 import Members from "./Members";
 import Playlists from "./Playlists";
@@ -13,33 +14,37 @@ const Room = () => {
   const { id } = useParams();
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const { data: roomInfo, isLoading, error } = useGetRoomInfo(id);
-  const currentSong = {
-    title: "Off the Record",
-    artist: "IVE",
-  };
+  const { data: roomInfo, isLoading: roomLoading, error: roomError } = useGetRoomInfo(id);
+  const { data: userInfo, isLoading: userLoading, error: userError } = useGetUserInfo(id);
 
-  if (isLoading) {
+  if (roomLoading || userLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    console.log(error);
-    return <p>Error fetching room information</p>;
+  if (roomError || userError) {
+    if (roomError) console.log(roomError);
+    if (userError) console.log(userError);
+    return <p>Error when fetching data</p>;
   }
 
   return (
     <div id="room-page" className="Page">
       <div className="room-page-container">
         <TopBar roomName={roomInfo.name} />
-        <Members memberList={roomInfo.members} />
+        <Members memberList={roomInfo.othermembers} user={userInfo} />
         <Playlists playlists={roomInfo.playlists} />
       </div>
-      <AudioPanel
-        currentSong={currentSong}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-      />
+      {
+        roomInfo.current_song ? (
+          <AudioPanel
+          currentSong={roomInfo.current_song}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+        ) : (
+          <div style={{ height: '3.5rem' }}></div>
+        )
+      }
       <AppBar />
     </div>
   );

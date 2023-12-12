@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";
-import { useUserSignup } from "../../hooks/useUserSignup";
+import { useUserSignup } from "../../hooks/useUser";
 import { ReactComponent as UserIcon } from "../../assets/user.svg";
 import { ReactComponent as EmailIcon } from "../../assets/email.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/password.svg";

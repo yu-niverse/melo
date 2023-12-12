@@ -20,6 +20,7 @@ export const create = async (input, userID) => {
       member_limit: input.member_limit,
       members: [new mongodb.ObjectId(userID)],
       queue: [],
+      current_song: null,
       playlists: [
         {
           _id: new mongodb.ObjectId(),
@@ -47,14 +48,30 @@ export const create = async (input, userID) => {
   }
 };
 
-export const getRoom = async (roomID) => {
+export const getRoom = async (roomID, userID) => {
   try {
+    // get user
+    const user = await userCollection.findOne({
+      _id: new mongodb.ObjectId(userID),
+    });
+    if (!user) {
+      throw new Error("User not found!");
+    }
     // check if room exists
-    const id = new mongodb.ObjectId(roomID);
-    const room = await roomCollection.findOne({ _id: id });
+    const room = await roomCollection.findOne({
+      _id: new mongodb.ObjectId(roomID),
+    });
     if (!room) {
       throw new Error("Room not found!");
     }
+    // get room members
+    const members = await userCollection
+      .find({ _id: { $in: room.members } })
+      .toArray();
+    room.members = members.map((member) => member.username);
+    room.othermembers = room.members.filter(
+      (member) => member !== user.username
+    );
     return room;
   } catch (err) {
     throw err;
@@ -140,4 +157,4 @@ export const leave = async (roomID, userID) => {
     await session.abortTransaction();
     throw err;
   }
-}
+};

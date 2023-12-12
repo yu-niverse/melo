@@ -1,5 +1,5 @@
 import React from "react";
-import { useUserLogin } from "../../hooks/useUserLogin";
+import { useUserLogin } from "../../hooks/useUser";
 import InputField from "../commonComponents/InputField";
 import OutlinedButton from "../commonComponents/OutlineButton";
 import HorizontalOr from "../commonComponents/HorizontalOr";

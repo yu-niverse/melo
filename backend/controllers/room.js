@@ -18,12 +18,15 @@ export const createRoom = async (req, res) => {
 
 export const getRoom = async (req, res) => {
   try {
-    const room = await Room.getRoom(req.params.roomID);
+    const room = await Room.getRoom(req.params.roomID, req.user.userID);
     res.status(200).json({
       data: room,
     });
   } catch (err) {
     console.log(err);
+    if (err.message === "User not found!") {
+      return res.status(400).send(err.message);
+    }
     if (err.message === "Room not found!") {
       return res.status(400).send(err.message);
     }
