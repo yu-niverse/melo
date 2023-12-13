@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMusic } from "../../../provider/MusicProvider";
 import AvatarItem from "../AvatarItem";
 import ControlPanel from "./ControlPanel";
 import QueuePanel from "./QueuePanel";
@@ -7,12 +8,11 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import "./AudioPanel.css";
 
-const AudioPanel = (props) => {
-  const { currentSong, isPlaying, setIsPlaying } = props;
-  const { title, artist } = currentSong;
+const AudioPanel = () => {
 
   const [openControlPanel, setOpenControlPanel] = useState(false);
   const [openQueuePanel, setOpenQueuePanel] = useState(false);
+  const currentSong = useMusic();
 
   return (
     <div id="audio-panel">
@@ -21,21 +21,21 @@ const AudioPanel = (props) => {
         onClick={() => setOpenControlPanel(true)}
       >
         <AvatarItem
-          title={<span className="item-name panel-item-name">{title}</span>}
+          title={<span className="item-name panel-item-name">{currentSong.title}</span>}
           avatar={
             <div className="avatar-box panel-avatar">
-              <span>{title[0]}</span>
+              <span>{currentSong.title[0]}</span>
             </div>
           }
-          subTitle={<div className="panel-subtitle">{artist}</div>}
+          subTitle={<div className="panel-subtitle">{currentSong.artist}</div>}
         />
       </div>
-      {isPlaying ? (
-        <IconButton onClick={() => setIsPlaying(false)}>
+      {currentSong.isPlaying ? (
+        <IconButton>
           <PauseRoundedIcon className="panel-icon" />
         </IconButton>
       ) : (
-        <IconButton onClick={() => setIsPlaying(true)}>
+        <IconButton>
           <PlayArrowRoundedIcon className="panel-icon" />
         </IconButton>
       )}

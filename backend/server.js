@@ -52,6 +52,16 @@ io.on("connection", (socket) => {
   console.log("user connected");
   console.log(socket.id);
 
+  socket.on("joinRoom", (roomId) => {
+    console.log("user joined room " + roomId)
+    socket.join(roomId);
+  });
+
+  socket.on("leaveRoom", (roomId) => {
+    console.log("user left room " + roomId)
+    socket.leave(roomId);
+  });
+
   const musicPath = "/Users/chiehyu/Desktop/melo/backend/public/test.mp3";
   ffmpeg(musicPath, { timeout: 432000 })
     .addOptions([

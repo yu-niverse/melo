@@ -1,19 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useGetUserInfo } from "../../hooks/useUser";
 import { useGetRoomInfo, useGetRooms } from "../../hooks/useRoom";
 import { useCreatePlaylist } from "../../hooks/usePlaylist";
-import TopBar from "./TopBar";
-import Members from "./Members";
-import Playlists from "./Playlists";
+import { useMusic } from "../../provider/MusicProvider";
 import AudioPanel from "../commonComponents/AudioPanel";
 import AppBar from "../commonComponents/AppBar";
+import RoomContent from "./RoomContent";
+import socket from "../../socket";
 import "./Room.css";
 
 const Room = () => {
   const { id } = useParams();
+  const { currentSong } = useMusic();
+  const [page, setPage] = useState("room");
+  console.log(currentSong);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  useEffect(() => {
+    console.log("Effect triggered with id:", id);
+    socket.emit("joinRoom", id);
+    return () => {
+      console.log("Effect cleanup with id:", id);
+      socket.emit("leaveRoom", id);
+    };
+  }, [id]);
+
   const {
     data: roomInfo,
     isLoading: roomLoading,
@@ -34,11 +45,14 @@ const Room = () => {
 
   const handleAddPlaylist = () => {
     console.log("create playlist");
-    mutation.mutate({ id }, {
-      onSuccess: () => {
-        roomRefetch();
+    mutation.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          roomRefetch();
+        },
       }
-    });
+    );
   };
 
   if (roomLoading || userLoading || userRoomsLoading) {
@@ -55,19 +69,20 @@ const Room = () => {
   return (
     <div id="room-page" className="Page">
       <div className="room-page-container">
-        <TopBar roomName={roomInfo.name} roomList={userRooms} />
-        <Members memberList={roomInfo.othermembers} user={userInfo} />
-        <Playlists roomID={id} playlists={roomInfo.playlists} handleAddPlaylist={handleAddPlaylist}/>
+        {page === "room" ? (
+          <RoomContent
+            roomInfo={roomInfo}
+            userRooms={userRooms}
+            userInfo={userInfo}
+            handleAddPlaylist={handleAddPlaylist}
+          />
+        ) : page === "playlist" ? (
+          <div>Playlist</div>
+        ) : (
+          <div>Search</div>
+        )}
       </div>
-      {roomInfo.current_song ? (
-        <AudioPanel
-          currentSong={roomInfo.current_song}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-        />
-      ) : (
-        <div style={{ height: "3.5rem" }}></div>
-      )}
+      {currentSong ? <AudioPanel /> : <div style={{ height: "3.5rem" }}></div>}
       <AppBar />
     </div>
   );

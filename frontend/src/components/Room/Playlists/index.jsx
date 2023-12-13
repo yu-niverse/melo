@@ -1,16 +1,9 @@
 import Playlist from "./Playlist";
 import "./Playlists.css";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import { useCreatePlaylist } from "../../../hooks/usePlaylist";
 
 const Playlists = (props) => {
-  const { roomID, playlists, handleAddPlaylist } = props;
-  // const mutation = useCreatePlaylist(roomID);
-
-  // const handleAddPlaylist = () => {
-  //   console.log("create playlist");
-  //   mutation.mutate({ roomID });
-  // };
+  const { playlists, handleAddPlaylist } = props;
 
   return (
     <div id="playlists">
