@@ -188,6 +188,7 @@ const Room = () => {
       </div>
       {currentSong && (
         <AudioPanel
+          roomID={id}
           audioRef={audioRef}
           handlePlay={handlePlay}
           handlePause={handlePause}

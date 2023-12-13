@@ -9,6 +9,7 @@ import "./ControlPanel.css";
 
 const ControlPanel = (props) => {
   const {
+    roomID,
     openControlPanel,
     setOpenControlPanel,
     setOpenQueuePanel,
@@ -56,11 +57,13 @@ const ControlPanel = (props) => {
         </div>
 
         <ControlBtns
+          roomID={roomID}
           queuePanel={false}
           setOpenControlPanel={setOpenControlPanel}
           setOpenQueuePanel={setOpenQueuePanel}
           handlePlay={handlePlay}
           handlePause={handlePause}
+          audioRef={audioRef}
         />
       </div>
     </Drawer>

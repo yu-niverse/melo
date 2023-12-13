@@ -9,7 +9,7 @@ import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import "./AudioPanel.css";
 
 const AudioPanel = (props) => {
-  const { handlePlay, handlePause, audioRef, handleSliderChange } = props;
+  const { roomID, handlePlay, handlePause, audioRef, handleSliderChange } = props;
   const [openControlPanel, setOpenControlPanel] = useState(false);
   const [openQueuePanel, setOpenQueuePanel] = useState(false);
   const { currentSong } = useMusic();
@@ -44,6 +44,7 @@ const AudioPanel = (props) => {
         </IconButton>
       )}
       <ControlPanel
+        roomID={roomID}
         openControlPanel={openControlPanel}
         setOpenControlPanel={setOpenControlPanel}
         setOpenQueuePanel={setOpenQueuePanel}

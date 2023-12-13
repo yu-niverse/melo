@@ -96,47 +96,6 @@ io.on("connection", (socket) => {
     console.log("seek " + position + " in room " + roomId);
     io.to(roomId).emit("seek", position);
   });
-
-  // old code
-  // const musicPath = "/Users/chiehyu/Desktop/melo/backend/public/test.mp3";
-  // ffmpeg(musicPath, { timeout: 432000 })
-  //   .addOptions([
-  //     "-profile:v baseline",
-  //     "-level 3.0",
-  //     "-start_number 0",
-  //     "-hls_time 10",
-  //     "-hls_list_size 0",
-  //     "-f hls",
-  //   ])
-  //   .output("./public/hls.m3u8")
-  //   .on("end", () => {
-  //     console.log("end");
-  //   })
-  //   .run();
-
-  // socket.on("loadAudio", () => {
-  //   console.log("loadAudio");
-  //   io.emit("loadAudio", "/hls.m3u8");
-  // });
-
-  // socket.on("playAudio", () => {
-  //   console.log("playAudio");
-  //   io.emit("playAudio");
-  // });
-
-  // socket.on("pauseAudio", () => {
-  //   console.log("pauseAudio");
-  //   io.emit("pauseAudio");
-  // });
-
-  // socket.on("disconnect", () => {
-  //   console.log("user disconnected");
-  // });
-
-  // socket.on("seekAudio", (position) => {
-  //   console.log("seekAudio");
-  //   io.emit("seekAudio", position);
-  // });
 });
 
 // Middleware
