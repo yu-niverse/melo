@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
 import Typography from '@mui/material/Typography';
 
-const ProgrssBar = () => {
-  const [position, setPosition] = useState(32);
-  const duration = 200;
+const ProgressBar = (props) => {
+  const { audioRef, handleSliderChange } = props;
+  const [position, setPosition] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const handleTimeUpdate = () => {
+      if (audioRef && audioRef.current) {
+        setPosition(audioRef.current.currentTime);
+        setDuration(audioRef.current.duration);
+      }
+    };
+
+    if (audioRef && audioRef.current) {
+      audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
+    }
+
+    return () => {
+      if (audioRef && audioRef.current) {
+        audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
+      }
+    };
+  }, [audioRef]);
 
   function formatDuration(value) {
     const minute = Math.floor(value / 60);
-    const secondLeft = value - minute * 60;
+    const secondLeft = Math.floor(value - minute * 60);
     return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
   }
 
@@ -21,7 +41,7 @@ const ProgrssBar = () => {
         min={0}
         step={1}
         max={duration}
-        onChange={(_, value) => setPosition(value)}
+        onChange={handleSliderChange}
         sx={{
           color: "#fff",
           height: 4,
@@ -53,4 +73,4 @@ const ProgrssBar = () => {
   );
 };
 
-export default ProgrssBar;
+export default ProgressBar;

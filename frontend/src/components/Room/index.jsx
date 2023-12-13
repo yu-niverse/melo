@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useGetUserInfo } from "../../hooks/useUser";
 import { useGetRoomInfo, useGetRooms } from "../../hooks/useRoom";
@@ -12,6 +12,7 @@ import SearchContent from "./SearchContent";
 import Invite from "./Invite";
 import socket from "../../socket";
 import CircularProgress from "@mui/material/CircularProgress";
+import HLS from "hls.js";
 import "./Room.css";
 
 const Room = () => {
@@ -20,7 +21,9 @@ const Room = () => {
   const [page, setPage] = useState("room");
   const [playlist, setPlaylist] = useState(null);
   const [openInvite, setOpenInvite] = useState(false);
-  console.log(currentSong);
+  const [playbackPosition, setPlaybackPosition] = useState(0);
+  const audioRef = useRef();
+  console.log("current song", currentSong);
 
   const openInvitePanel = () => {
     console.log("open invite");
@@ -36,6 +39,58 @@ const Room = () => {
       socket.emit("leaveRoom", id);
     };
   }, [id]);
+
+  useEffect(() => {
+    socket.on("play", (song, path, position) => {
+      console.log("play", song);
+      // load and play song
+      path = process.env.REACT_APP_BASE_URL + path;
+      if (HLS.isSupported()) {
+        var hls = new HLS();
+        hls.loadSource(path);
+        hls.attachMedia(audioRef.current);
+        hls.on(HLS.Events.MANIFEST_PARSED, function () {
+          if (position !== undefined) {
+            audioRef.current.currentTime = position;
+          }
+          audioRef.current.play();
+          setCurrentSong({
+            ...song,
+            isPlaying: true,
+          });
+        });
+      } else if (
+        audioRef.current.canPlayType("application/vnd.apple.mpegurl")
+      ) {
+        audioRef.current.src = path;
+        audioRef.current.play();
+        setCurrentSong({
+          ...song,
+          isPlaying: true,
+        });
+      } else {
+        console.log("Not supported");
+      }
+    });
+
+    socket.on("pause", (song) => {
+      console.log("pause", song);
+      setPlaybackPosition(audioRef.current.currentTime);
+      audioRef.current.pause();
+      setCurrentSong({
+        ...song,
+        isPlaying: false,
+      });
+    });
+
+    socket.on("seek", (position) => {
+      console.log("seek", position);
+      if (audioRef && audioRef.current) {
+        audioRef.current.currentTime = position;
+      }
+    });
+
+  }, [socket]);
 
   const {
     data: roomInfo,
@@ -75,7 +130,25 @@ const Room = () => {
 
   const handleClickSong = (song) => {
     console.log("click song", song);
-    setCurrentSong(song);
+    socket.emit("load", id, song);
+    setCurrentSong({
+      ...song,
+      isPlaying: false,
+    });
+  };
+
+  const handlePlay = (song) => {
+    console.log("handle play", song.name);
+    socket.emit("play", id, song, playbackPosition);
+  };
+
+  const handlePause = (song) => {
+    console.log("handle pause", song.name);
+    socket.emit("pause", id, song);
+  };
+
+  const handleSliderChange = (_, value) => {
+    socket.emit("seek", id, value);
   };
 
   return (
@@ -113,7 +186,14 @@ const Room = () => {
           <div>Invite</div>
         )}
       </div>
-      {currentSong && <AudioPanel />}
+      {currentSong && (
+        <AudioPanel
+          audioRef={audioRef}
+          handlePlay={handlePlay}
+          handlePause={handlePause}
+          handleSliderChange={handleSliderChange}
+        />
+      )}
       <AppBar setPage={setPage} openInvite={openInvitePanel} />
       <Invite openPanel={openInvite} setOpenPanel={setOpenInvite} />
     </div>

@@ -3,12 +3,21 @@ import FastRewindRounded from "@mui/icons-material/FastRewindRounded";
 import FastForwardRounded from "@mui/icons-material/FastForwardRounded";
 import { ReactComponent as ShuffleBtn } from "../../../../assets/shuffle.svg";
 import { ReactComponent as PlayBtn } from "../../../../assets/play.svg";
+import { ReactComponent as PauseBtn } from "../../../../assets/pause.svg";
 import { ReactComponent as QueueBtn } from "../../../../assets/queue.svg";
 import { ReactComponent as RepeatBtn } from "../../../../assets/repeat.svg";
+import { useMusic } from "../../../../provider/MusicProvider";
 import "./ControlBtns.css";
 
 const ControlBtns = (props) => {
-  const { queuePanel, setOpenControlPanel, setOpenQueuePanel } = props;
+  const {
+    queuePanel,
+    setOpenControlPanel,
+    setOpenQueuePanel,
+    handlePlay,
+    handlePause,
+  } = props;
+  const { currentSong } = useMusic();
 
   return (
     <div id="control-btns">
@@ -18,9 +27,15 @@ const ControlBtns = (props) => {
       <IconButton>
         <FastRewindRounded className="control-btn" />
       </IconButton>
-      <IconButton>
-        <PlayBtn />
-      </IconButton>
+      {currentSong.isPlaying ? (
+        <IconButton>
+          <PauseBtn />
+        </IconButton>
+      ) : (
+        <IconButton>
+          <PlayBtn />
+        </IconButton>
+      )}
       <IconButton>
         <FastForwardRounded className="control-btn" />
       </IconButton>

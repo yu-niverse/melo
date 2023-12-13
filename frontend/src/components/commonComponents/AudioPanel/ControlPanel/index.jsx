@@ -4,16 +4,20 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useMusic } from "../../../../provider/MusicProvider";
 import "./ControlPanel.css";
 
 const ControlPanel = (props) => {
-  const { openControlPanel, setOpenControlPanel, setOpenQueuePanel } = props;
-
-  const playingSong = {
-    title: "Off the Record",
-    artist: "IVE",
-    like: 3,
-  };
+  const {
+    openControlPanel,
+    setOpenControlPanel,
+    setOpenQueuePanel,
+    handlePlay,
+    handlePause,
+    audioRef,
+    handleSliderChange,
+  } = props;
+  const { currentSong } = useMusic();
 
   return (
     <Drawer
@@ -40,21 +44,23 @@ const ControlPanel = (props) => {
         <div className="image"></div>
 
         <div className="info-container">
-          <span className="info-title">{playingSong.title}</span>
+          <span className="info-title">{currentSong.name}</span>
           <div className="artist-like">
-            <span className="info-artist">{playingSong.artist}</span>
+            <span className="info-artist">{currentSong.artist}</span>
             <IconButton>
               <FavoriteBorderOutlinedIcon className="info-favorite-icon" />
             </IconButton>
-            <span className="info-favorite-count">{playingSong.like}</span>
+            <span className="info-favorite-count">{0}</span>
           </div>
-          <ProgrssBar />
+          <ProgrssBar audioRef={audioRef} handleSliderChange={handleSliderChange} />
         </div>
 
         <ControlBtns
           queuePanel={false}
           setOpenControlPanel={setOpenControlPanel}
           setOpenQueuePanel={setOpenQueuePanel}
+          handlePlay={handlePlay}
+          handlePause={handlePause}
         />
       </div>
     </Drawer>

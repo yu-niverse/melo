@@ -62,45 +62,81 @@ io.on("connection", (socket) => {
     socket.leave(roomId);
   });
 
-  const musicPath = "/Users/chiehyu/Desktop/melo/backend/public/test.mp3";
-  ffmpeg(musicPath, { timeout: 432000 })
-    .addOptions([
-      "-profile:v baseline",
-      "-level 3.0",
-      "-start_number 0",
-      "-hls_time 10",
-      "-hls_list_size 0",
-      "-f hls",
-    ])
-    .output("./public/hls.m3u8")
-    .on("end", () => {
-      console.log("end");
-    })
-    .run();
-
-  socket.on("loadAudio", () => {
-    console.log("loadAudio");
-    io.emit("loadAudio", "/hls.m3u8");
+  socket.on("load", (roomId, song) => {
+    const filename = song.name.replace(/[^a-zA-Z0-9]/g, '');
+    ffmpeg(song.url, { timeout: 432000 })
+      .addOptions([
+        "-profile:v baseline",
+        "-level 3.0",
+        "-start_number 0",
+        "-hls_time 10",
+        "-hls_list_size 0",
+        "-f hls",
+      ])
+      .output("./public/" + filename + ".m3u8")
+      .on("end", () => {
+        console.log("loaded " + song.name + " in room " + roomId);
+        io.to(roomId).emit("play", song, "/" + filename + ".m3u8");
+      })
+      .run();
   });
 
-  socket.on("playAudio", () => {
-    console.log("playAudio");
-    io.emit("playAudio");
+  socket.on("play", (roomId, song, position) => {
+    console.log("play " + song.name + " in room " + roomId);
+    const filename = song.name.replace(/[^a-zA-Z0-9]/g, '');
+    io.to(roomId).emit("play", song, "/" + filename + ".m3u8", position);
   });
 
-  socket.on("pauseAudio", () => {
-    console.log("pauseAudio");
-    io.emit("pauseAudio");
+  socket.on("pause", (roomId, song) => {
+    console.log("pause " + song.name + " in room " + roomId);
+    io.to(roomId).emit("pause", song);
   });
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  socket.on("seek", (roomId, position) => {
+    console.log("seek " + position + " in room " + roomId);
+    io.to(roomId).emit("seek", position);
   });
 
-  socket.on("seekAudio", (position) => {
-    console.log("seekAudio");
-    io.emit("seekAudio", position);
-  });
+  // old code
+  // const musicPath = "/Users/chiehyu/Desktop/melo/backend/public/test.mp3";
+  // ffmpeg(musicPath, { timeout: 432000 })
+  //   .addOptions([
+  //     "-profile:v baseline",
+  //     "-level 3.0",
+  //     "-start_number 0",
+  //     "-hls_time 10",
+  //     "-hls_list_size 0",
+  //     "-f hls",
+  //   ])
+  //   .output("./public/hls.m3u8")
+  //   .on("end", () => {
+  //     console.log("end");
+  //   })
+  //   .run();
+
+  // socket.on("loadAudio", () => {
+  //   console.log("loadAudio");
+  //   io.emit("loadAudio", "/hls.m3u8");
+  // });
+
+  // socket.on("playAudio", () => {
+  //   console.log("playAudio");
+  //   io.emit("playAudio");
+  // });
+
+  // socket.on("pauseAudio", () => {
+  //   console.log("pauseAudio");
+  //   io.emit("pauseAudio");
+  // });
+
+  // socket.on("disconnect", () => {
+  //   console.log("user disconnected");
+  // });
+
+  // socket.on("seekAudio", (position) => {
+  //   console.log("seekAudio");
+  //   io.emit("seekAudio", position);
+  // });
 });
 
 // Middleware

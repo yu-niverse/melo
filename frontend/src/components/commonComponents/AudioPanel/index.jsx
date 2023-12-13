@@ -8,8 +8,8 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import "./AudioPanel.css";
 
-const AudioPanel = () => {
-
+const AudioPanel = (props) => {
+  const { handlePlay, handlePause, audioRef, handleSliderChange } = props;
   const [openControlPanel, setOpenControlPanel] = useState(false);
   const [openQueuePanel, setOpenQueuePanel] = useState(false);
   const { currentSong } = useMusic();
@@ -21,7 +21,11 @@ const AudioPanel = () => {
         onClick={() => setOpenControlPanel(true)}
       >
         <AvatarItem
-          title={<span className="item-name panel-item-name">{currentSong.name}</span>}
+          title={
+            <span className="item-name panel-item-name">
+              {currentSong.name}
+            </span>
+          }
           avatar={
             <div className="avatar-box panel-avatar">
               <span>{currentSong.name[0]}</span>
@@ -31,11 +35,11 @@ const AudioPanel = () => {
         />
       </div>
       {currentSong.isPlaying ? (
-        <IconButton>
+        <IconButton onClick={() => handlePause(currentSong)}>
           <PauseRoundedIcon className="panel-icon" />
         </IconButton>
       ) : (
-        <IconButton>
+        <IconButton onClick={() => handlePlay(currentSong)}>
           <PlayArrowRoundedIcon className="panel-icon" />
         </IconButton>
       )}
@@ -43,8 +47,13 @@ const AudioPanel = () => {
         openControlPanel={openControlPanel}
         setOpenControlPanel={setOpenControlPanel}
         setOpenQueuePanel={setOpenQueuePanel}
+        handlePlay={handlePlay}
+        handlePause={handlePause}
+        audioRef={audioRef}
+        handleSliderChange={handleSliderChange}
       />
       <QueuePanel openPanel={openQueuePanel} setOpenPanel={setOpenQueuePanel} />
+      <audio id="audio-player" width="720" ref={audioRef}></audio>
     </div>
   );
 };
