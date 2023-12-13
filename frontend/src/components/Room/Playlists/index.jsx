@@ -3,7 +3,7 @@ import "./Playlists.css";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const Playlists = (props) => {
-  const { playlists, handleAddPlaylist } = props;
+  const { playlists, handleAddPlaylist, handleClickPlaylist } = props;
 
   return (
     <div id="playlists">
@@ -18,8 +18,8 @@ const Playlists = (props) => {
         {playlists.map((playlist, index) => (
           <Playlist
             key={index}
-            title={playlist.name}
-            creator={playlist.added_by}
+            playlist={playlist}
+            handleClickPlaylist={handleClickPlaylist}
           />
         ))}
       </div>

@@ -10,3 +10,12 @@ export const CreatePlaylist = async (id) => {
   });
   return response.data.data;
 };
+
+export const GetPlaylistSongs = async (roomID, playlistID) => {
+  const response = await axios({
+    method: "GET",
+    url: API.playlist + "/" + roomID + "/" + playlistID,
+    headers: { "Content-Type": "application/json" }
+  });
+  return response.data.data;
+}

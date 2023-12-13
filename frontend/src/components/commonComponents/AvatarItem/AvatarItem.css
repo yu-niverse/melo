@@ -16,7 +16,7 @@
     height: 3rem;
     border-radius: 0.5rem;
     margin-right: 1rem;
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 700;
     display: flex;
     justify-content: center;
@@ -41,6 +41,10 @@
     background-color: rgba(248, 248, 235, 0.08);
 }
 
+.add-song-avatar {
+  background-color: #2E2F32;  
+}
+
 .item-info {
     display: flex;
     flex-direction: column;
@@ -49,7 +53,14 @@
 
     .item-name {
         color: #F8F8EB;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 1.05px;
+    }
+
+    .add-song-item-name {
+        color: rgba(248, 248, 235, 0.70);;
+        font-size: 0.9rem;
         font-weight: 700;
         letter-spacing: 1.05px;
     }

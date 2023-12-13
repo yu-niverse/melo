@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { ReactComponent as MainIcon } from "../../../assets/grid.svg";
@@ -9,14 +8,12 @@ import { ReactComponent as InviteIcon } from "../../../assets/invite.svg";
 import "./AppBar.css";
 
 const AppBar = (props) => {
-  const { setPage } = props;
-  //   const navigate = useNavigate();
+  const { setPage, openInvite } = props;
 
   const [value, setValue] = useState("room");
 
   const handleChange = (_e, newValue) => {
-    // if (newValue === 0) navigate("/main");
-    setPage(newValue);
+    if (newValue !== "invite") setPage(newValue);
     setValue(newValue);
   };
 
@@ -39,6 +36,7 @@ const AppBar = (props) => {
         icon={<MainIcon />}
         className={value === "room" ? "tab-selected" : "tab"}
         label="Main"
+        onClick={() => {setPage("room")} }
       />
       <Tab
         value={"search"}
@@ -57,6 +55,7 @@ const AppBar = (props) => {
         icon={<InviteIcon />}
         className={value === "invite" ? "tab-selected" : "tab"}
         label="Invite"
+        onClick={() => openInvite()}
       />
     </Tabs>
   );

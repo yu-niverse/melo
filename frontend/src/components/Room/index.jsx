@@ -7,19 +7,30 @@ import { useMusic } from "../../provider/MusicProvider";
 import AudioPanel from "../commonComponents/AudioPanel";
 import AppBar from "../commonComponents/AppBar";
 import RoomContent from "./RoomContent";
+import PlaylistContent from "./PlaylistContent";
 import SearchContent from "./SearchContent";
+import Invite from "./Invite";
 import socket from "../../socket";
+import CircularProgress from "@mui/material/CircularProgress";
 import "./Room.css";
 
 const Room = () => {
   const { id } = useParams();
-  const { currentSong } = useMusic();
+  const { currentSong, setCurrentSong } = useMusic();
   const [page, setPage] = useState("room");
+  const [playlist, setPlaylist] = useState(null);
+  const [openInvite, setOpenInvite] = useState(false);
   console.log(currentSong);
+
+  const openInvitePanel = () => {
+    console.log("open invite");
+    setOpenInvite(true);
+  };
 
   useEffect(() => {
     console.log("Effect triggered with id:", id);
     socket.emit("joinRoom", id);
+    setPage("room");
     return () => {
       console.log("Effect cleanup with id:", id);
       socket.emit("leaveRoom", id);
@@ -56,39 +67,55 @@ const Room = () => {
     );
   };
 
-  if (roomLoading || userLoading || userRoomsLoading) {
-    return <p>Loading...</p>;
-  }
+  const handleClickPlaylist = (playlist) => {
+    console.log("click playlist", playlist);
+    setPlaylist(playlist);
+    setPage("playlist");
+  };
 
-  if (roomError || userError || userRoomsError) {
-    if (roomError) console.log(roomError);
-    if (userError) console.log(userError);
-    if (userRoomsError) console.log(userRoomsError);
-    return <p>Error when fetching data</p>;
-  }
+  const handleClickSong = (song) => {
+    console.log("click song", song);
+    setCurrentSong(song);
+  };
 
   return (
     <div id="room-page" className="Page">
       <div className="room-page-container">
-        {page === "room" ? (
+        {roomLoading || userLoading || userRoomsLoading ? (
+          <div className="loading-container">
+            <CircularProgress color="inherit" />
+          </div>
+        ) : roomError || userError || userRoomsError ? (
+          <div className="loading-container">
+            <span>Error when fetching data</span>
+          </div>
+        ) : page === "room" ? (
           <RoomContent
             roomInfo={roomInfo}
             userRooms={userRooms}
             userInfo={userInfo}
             handleAddPlaylist={handleAddPlaylist}
+            handleClickPlaylist={handleClickPlaylist}
+            setPage={setPage}
           />
         ) : page === "playlist" ? (
-          <div>Playlist</div>
+          <PlaylistContent
+            roomInfo={roomInfo}
+            userRooms={userRooms}
+            playlist={playlist}
+            handleClickSong={handleClickSong}
+          />
         ) : page === "search" ? (
-          <SearchContent userRooms={userRooms} />
+          <SearchContent userRooms={userRooms} playlists={roomInfo.playlists} />
         ) : page === "analysis" ? (
           <div>Analysis</div>
         ) : (
           <div>Invite</div>
         )}
       </div>
-      {currentSong ? <AudioPanel /> : <div style={{ height: "3.5rem" }}></div>}
-      <AppBar setPage={setPage} />
+      {currentSong && <AudioPanel />}
+      <AppBar setPage={setPage} openInvite={openInvitePanel} />
+      <Invite openPanel={openInvite} setOpenPanel={setOpenInvite} />
     </div>
   );
 };

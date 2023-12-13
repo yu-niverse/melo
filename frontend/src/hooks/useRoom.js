@@ -7,4 +7,4 @@ export const useGetRoomInfo = (roomID) => {
 
 export const useGetRooms = () => {
   return useQuery("GetRooms", () => GetRooms());
-}
+};

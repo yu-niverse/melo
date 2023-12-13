@@ -12,7 +12,7 @@ const AudioPanel = () => {
 
   const [openControlPanel, setOpenControlPanel] = useState(false);
   const [openQueuePanel, setOpenQueuePanel] = useState(false);
-  const currentSong = useMusic();
+  const { currentSong } = useMusic();
 
   return (
     <div id="audio-panel">
@@ -21,10 +21,10 @@ const AudioPanel = () => {
         onClick={() => setOpenControlPanel(true)}
       >
         <AvatarItem
-          title={<span className="item-name panel-item-name">{currentSong.title}</span>}
+          title={<span className="item-name panel-item-name">{currentSong.name}</span>}
           avatar={
             <div className="avatar-box panel-avatar">
-              <span>{currentSong.title[0]}</span>
+              <span>{currentSong.name[0]}</span>
             </div>
           }
           subTitle={<div className="panel-subtitle">{currentSong.artist}</div>}

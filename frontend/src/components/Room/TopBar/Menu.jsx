@@ -4,7 +4,7 @@ import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 const Menu = (props) => {
-  const { openMenu, setOpenMenu, roomList } = props;
+  const { openMenu, handleClickRoom, roomList, setOpenMenu } = props;
 
   return (
     <Drawer anchor="left" open={openMenu} onClose={() => setOpenMenu(false)}>
@@ -24,6 +24,7 @@ const Menu = (props) => {
                 <span className="menu-subtitle">{`${room.members.length}/${room.member_limit} members`}</span>
               }
               link={`/room/${room._id}`}
+              handleClickRoom={handleClickRoom}
               setOpenMenu={setOpenMenu}
             />
           ))}
@@ -38,7 +39,7 @@ const Menu = (props) => {
               <span className="menu-subtitle">Create a new room</span>
             }
             link={`/newRoom`}
-            setOpenMenu={setOpenMenu}
+            handleClickRoom={handleClickRoom}
           />
         </div>
         <div className="invitation">

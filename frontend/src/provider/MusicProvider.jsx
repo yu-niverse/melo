@@ -3,16 +3,16 @@ import { createContext, useContext, useMemo, useState } from "react";
 export const MusicContext = createContext();
 
 const MusicProvider = ({ children }) => {
-  const [currentSong, setCurrentSong] = useState(null);
+  const [currentSong, setCurrentSong_] = useState(null);
 
-  const setCurrentSong_ = (song) => {
-    setCurrentSong(song);
+  const setCurrentSong = (song) => {
+    setCurrentSong_(song);
   };
 
   const contextValue = useMemo(
     () => ({
       currentSong,
-      setCurrentSong_,
+      setCurrentSong,
     }),
     [currentSong]
   );

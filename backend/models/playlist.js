@@ -4,6 +4,7 @@ import mongodb from "mongodb";
 const db = client.db("melo");
 const userCollection = db.collection("users");
 const roomCollection = db.collection("rooms");
+const songCollection = db.collection("songs");
 
 export const create = async (roomID, userID) => {
   try {
@@ -63,6 +64,15 @@ export const getPlaylist = async (roomID, playlistID) => {
     if (!playlist) {
       throw new Error("Playlist not found!");
     }
+    const songs = await songCollection.find ({
+      _id: { $in: playlist.songs.map((item) => item.id) },
+    }).toArray();
+    songs.forEach((song) => {
+      song.added_by = playlist.songs.find((item) =>
+        item.id.equals(song._id)
+      ).added_by;
+    });
+    playlist.songs = songs;
     return playlist;
   } catch (err) {
     throw err;

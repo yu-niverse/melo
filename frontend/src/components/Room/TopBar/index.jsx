@@ -6,9 +6,13 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "./TopBar.css";
 
 const TopBar = (props) => {
-  const { title, roomList, canSearch } = props;
+  const { title, roomList, canSearch, setPage } = props;
 
   const [openMenu, setOpenMenu] = useState(false);
+  const handleClickRoom = () => {
+    setOpenMenu(false);
+    setPage("room");
+  };
 
   return (
     <div id="top-bar">
@@ -19,7 +23,12 @@ const TopBar = (props) => {
       >
         <MenuRoundedIcon fontSize="large" />
       </IconButton>
-      <Menu openMenu={openMenu} setOpenMenu={setOpenMenu} roomList={roomList} />
+      <Menu
+        openMenu={openMenu}
+        handleClickRoom={handleClickRoom}
+        roomList={roomList}
+        setOpenMenu={setOpenMenu}
+      />
       <div className="room-name">{title}</div>
       {canSearch && (
         <IconButton className="search-icon-btn" aria-label="search">

@@ -1,19 +1,19 @@
 import AvatarItem from "../../commonComponents/AvatarItem";
 
 const Playlist = (props) => {
-  const { title, creator } = props;
+  const { playlist, handleClickPlaylist } = props;
 
   return (
-    <div className="playlist">
+    <div className="playlist" onClick={() => handleClickPlaylist(playlist)}>
       <AvatarItem
-        title={<span className="item-name">{title}</span>}
+        title={<span className="item-name">{playlist.name}</span>}
         avatar={
           <div className="avatar-box playlist-avatar">
-            <span>{title[0]}</span>
+            <span>{playlist.name[0]}</span>
           </div>
         }
         subTitle={
-          <div className="playlist-subtitle">{`playlist • ${creator}`}</div>
+          <div className="playlist-subtitle">{`playlist • ${playlist.added_by}`}</div>
         }
       />
     </div>
