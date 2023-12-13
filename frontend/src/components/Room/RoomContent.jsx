@@ -7,7 +7,7 @@ const RoomContent = (props) => {
 
   return (
     <>
-      <TopBar roomName={roomInfo.name} roomList={userRooms} />
+      <TopBar title={roomInfo.name} roomList={userRooms} canSearch={true} />
       <Members memberList={roomInfo.othermembers} user={userInfo} />
       <Playlists
         playlists={roomInfo.playlists}

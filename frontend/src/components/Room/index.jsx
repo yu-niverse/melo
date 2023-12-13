@@ -7,6 +7,7 @@ import { useMusic } from "../../provider/MusicProvider";
 import AudioPanel from "../commonComponents/AudioPanel";
 import AppBar from "../commonComponents/AppBar";
 import RoomContent from "./RoomContent";
+import SearchContent from "./SearchContent";
 import socket from "../../socket";
 import "./Room.css";
 
@@ -78,12 +79,16 @@ const Room = () => {
           />
         ) : page === "playlist" ? (
           <div>Playlist</div>
+        ) : page === "search" ? (
+          <SearchContent userRooms={userRooms} />
+        ) : page === "analysis" ? (
+          <div>Analysis</div>
         ) : (
-          <div>Search</div>
+          <div>Invite</div>
         )}
       </div>
       {currentSong ? <AudioPanel /> : <div style={{ height: "3.5rem" }}></div>}
-      <AppBar />
+      <AppBar setPage={setPage} />
     </div>
   );
 };

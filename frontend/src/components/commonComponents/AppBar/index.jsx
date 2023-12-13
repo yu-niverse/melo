@@ -8,14 +8,15 @@ import { ReactComponent as AnalysisIcon } from "../../../assets/analysis.svg";
 import { ReactComponent as InviteIcon } from "../../../assets/invite.svg";
 import "./AppBar.css";
 
-const AppBar = () => {
-//   const navigate = useNavigate();
+const AppBar = (props) => {
+  const { setPage } = props;
+  //   const navigate = useNavigate();
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("room");
 
   const handleChange = (_e, newValue) => {
     // if (newValue === 0) navigate("/main");
-
+    setPage(newValue);
     setValue(newValue);
   };
 
@@ -34,23 +35,27 @@ const AppBar = () => {
       }}
     >
       <Tab
+        value={"room"}
         icon={<MainIcon />}
-        className={value === 0 ? "tab-selected" : "tab"}
+        className={value === "room" ? "tab-selected" : "tab"}
         label="Main"
       />
       <Tab
+        value={"search"}
         icon={<SearchIcon />}
-        className={value === 1 ? "tab-selected" : "tab"}
+        className={value === "search" ? "tab-selected" : "tab"}
         label="Search"
       />
       <Tab
+        value={"analysis"}
         icon={<AnalysisIcon />}
-        className={value === 2 ? "tab-selected" : "tab"}
+        className={value === "analysis" ? "tab-selected" : "tab"}
         label="Analysis"
       />
       <Tab
+        value={"invite"}
         icon={<InviteIcon />}
-        className={value === 3 ? "tab-selected" : "tab"}
+        className={value === "invite" ? "tab-selected" : "tab"}
         label="Invite"
       />
     </Tabs>
