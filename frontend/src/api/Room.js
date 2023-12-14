@@ -18,3 +18,12 @@ export const GetRooms = async () => {
   });
   return response.data.data;
 }
+
+export const JoinRoom = async (id) => {
+  const response = await axios({
+    method: "POST",
+    url: API.room + "/" + id.id,
+    headers: { "Content-Type": "application/json" },
+  });
+  return response.data.data;
+}

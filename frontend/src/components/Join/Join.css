@@ -1,0 +1,47 @@
+#join-room-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg,
+            #333840 33.85%,
+            #46494b 60.9%,
+            #69685f 97.47%,
+            #f5e6b1 139.3%);
+
+    .join-room-page-title {
+        color: #F8F8EB;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
+        letter-spacing: 1.4px;
+    }
+
+    .join-room-page-room-name {
+        color: #FDD18E;
+        text-align: center;
+        text-shadow: 0px 4px 4px rgba(253, 209, 142, 0.30);
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1.68px;
+        margin: 1rem 0;
+    }
+
+    .join-room-btn {
+        width: 10rem;
+        height: 2.5rem;
+        border: none;
+        border-radius: 10px;
+        background: rgba(248, 248, 235, 0.08);
+        color: #F8F8EB;
+        cursor: pointer;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.72px;
+        margin-top: 2rem;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+    }
+}

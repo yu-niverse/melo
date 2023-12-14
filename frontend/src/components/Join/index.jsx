@@ -1,19 +1,47 @@
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
+import { useGetRoomInfo, useJoinRoom } from "../../hooks/useRoom";
+import CircularProgress from "@mui/material/CircularProgress";
+import "./Join.css";
 
 const Join = () => {
-    const { id } = useParams()
-    const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const mutation = useJoinRoom(id);
 
-    const handleJoin = () => {
-        navigate(`/room/${id}`)
-    }
+  const {
+    data: roomInfo,
+    isLoading: roomLoading,
+    error: roomError,
+  } = useGetRoomInfo(id);
 
-    return (
-        <div>
-            Join room id: {id}
-            <button onClick={handleJoin}>Join</button>
-        </div>
-    )
-}
+  const handleJoin = () => {
+    mutation.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          navigate(`/room/${id}`);
+        },
+      }
+    );
+  };
 
-export default Join
+  return (
+    <div id="join-room-page">
+      {roomLoading ? (
+        <CircularProgress color="inherit" />
+      ) : roomError ? (
+        <div>{roomError}</div>
+      ) : (
+        <>
+          <div className="join-room-page-title">Join Room</div>
+          <div className="join-room-page-room-name">{roomInfo.name}</div>
+          <button className="join-room-btn" onClick={handleJoin}>
+            Join
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Join;
