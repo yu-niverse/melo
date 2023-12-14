@@ -10,6 +10,7 @@ const RoomContent = (props) => {
     handleAddPlaylist,
     handleClickPlaylist,
     setPage,
+    avatarColor,
   } = props;
 
   return (
@@ -20,7 +21,7 @@ const RoomContent = (props) => {
         canSearch={true}
         setPage={setPage}
       />
-      <Members memberList={roomInfo.othermembers} user={userInfo} />
+      <Members memberList={roomInfo.othermembers} user={userInfo} avatarColor={avatarColor} />
       <Playlists
         playlists={roomInfo.playlists}
         handleAddPlaylist={handleAddPlaylist}

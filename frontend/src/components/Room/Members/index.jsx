@@ -3,8 +3,7 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import "./Members.css";
 
 const Members = (props) => {
-  const { memberList, user } = props;
-  const avatarColor = ["#D3CBAE", "#F8F8EB", "#FDD18E", "#F8F8EB"];
+  const { memberList, user, avatarColor } = props;
 
   return (
     <div id="members">
@@ -41,8 +40,8 @@ const Members = (props) => {
               alt={member}
               className="avatar"
               sx={{
-                bgcolor: avatarColor[index],
-                borderColor: avatarColor[index],
+                bgcolor: avatarColor[member[0].charCodeAt(0) % 4],
+                borderColor: avatarColor[member[0].charCodeAt(0) % 4],
               }}
             >
               {member[0]}

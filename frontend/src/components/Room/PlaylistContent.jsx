@@ -10,7 +10,7 @@ import AddSongPanel from "../commonComponents/AddSongPanel";
 import { useGetPlaylistSongs } from "../../hooks/usePlaylist";
 
 const PlaylistContent = (props) => {
-  const { roomInfo, userRooms, playlist, handleClickSong } = props;
+  const { roomInfo, userRooms, playlist, handleClickSong, avatarColor } = props;
   const [openAddSongPanel, setOpenAddSongPanel] = useState(false);
   const {
     data: playlistInfo,
@@ -80,7 +80,8 @@ const PlaylistContent = (props) => {
                         }}
                       >
                         <Avatar
-                          style={{
+                          sx={{
+                            bgcolor: avatarColor[song.added_by[0].charCodeAt(0) % 4],
                             color: "#333840",
                             fontSize: "11px",
                             width: "1rem",

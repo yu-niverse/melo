@@ -23,6 +23,7 @@ const Room = () => {
   const [openInvite, setOpenInvite] = useState(false);
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const audioRef = useRef();
+  const avatarColor = ["#FDD18E", "#D3CBAE", "#FFEBA5", "#F8F8EB"];
   console.log("current song", currentSong);
 
   const openInvitePanel = () => {
@@ -169,6 +170,7 @@ const Room = () => {
             handleAddPlaylist={handleAddPlaylist}
             handleClickPlaylist={handleClickPlaylist}
             setPage={setPage}
+            avatarColor={avatarColor}
           />
         ) : page === "playlist" ? (
           <PlaylistContent
@@ -176,6 +178,7 @@ const Room = () => {
             userRooms={userRooms}
             playlist={playlist}
             handleClickSong={handleClickSong}
+            avatarColor={avatarColor}
           />
         ) : page === "search" ? (
           <SearchContent userRooms={userRooms} playlists={roomInfo.playlists} />
