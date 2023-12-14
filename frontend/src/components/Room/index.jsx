@@ -194,6 +194,7 @@ const Room = () => {
           handleSliderChange={handleSliderChange}
         />
       )}
+      <audio id="audio-player" width="720" ref={audioRef}></audio>
       <AppBar setPage={setPage} openInvite={openInvitePanel} />
       <Invite openPanel={openInvite} setOpenPanel={setOpenInvite} />
     </div>

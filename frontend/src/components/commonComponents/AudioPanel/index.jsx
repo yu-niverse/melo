@@ -54,7 +54,6 @@ const AudioPanel = (props) => {
         handleSliderChange={handleSliderChange}
       />
       <QueuePanel openPanel={openQueuePanel} setOpenPanel={setOpenQueuePanel} />
-      <audio id="audio-player" width="720" ref={audioRef}></audio>
     </div>
   );
 };
