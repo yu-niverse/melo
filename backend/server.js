@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
-import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
-import ffmpeg from "fluent-ffmpeg";
+// import ffmpegInstaller from "@ffmpeg-installer/ffmpeg";
+// import ffmpeg from "fluent-ffmpeg";
 import user from "./routes/user.js";
 import room from "./routes/room.js";
 import playlist from "./routes/playlist.js";
@@ -38,9 +38,9 @@ async function terminate() {
   }
 }
 
-await init();
-const _path = ffmpegInstaller.path;
-ffmpeg.setFfmpegPath(_path);
+// await init();
+// const _path = ffmpegInstaller.path;
+// ffmpeg.setFfmpegPath(_path);
 
 const io = new Server(server, {
   cors: {
@@ -63,22 +63,25 @@ io.on("connection", (socket) => {
   });
 
   socket.on("load", (roomId, song) => {
-    const filename = song.name.replace(/[^a-zA-Z0-9]/g, '');
-    ffmpeg(song.url, { timeout: 432000 })
-      .addOptions([
-        "-profile:v baseline",
-        "-level 3.0",
-        "-start_number 0",
-        "-hls_time 10",
-        "-hls_list_size 0",
-        "-f hls",
-      ])
-      .output("./public/" + filename + ".m3u8")
-      .on("end", () => {
-        console.log("loaded " + song.name + " in room " + roomId);
-        io.to(roomId).emit("play", song, "/" + filename + ".m3u8");
-      })
-      .run();
+
+    console.log("load " + song.name + " in room " + roomId)
+    io.to(roomId).emit("play", song);
+    // const filename = song.name.replace(/[^a-zA-Z0-9]/g, '');
+    // ffmpeg(song.url, { timeout: 432000 })
+    //   .addOptions([
+    //     "-profile:v baseline",
+    //     "-level 3.0",
+    //     "-start_number 0",
+    //     "-hls_time 10",
+    //     "-hls_list_size 0",
+    //     "-f hls",
+    //   ])
+    //   .output("./public/" + filename + ".m3u8")
+    //   .on("end", () => {
+    //     console.log("loaded " + song.name + " in room " + roomId);
+    //     io.to(roomId).emit("play", song, "/" + filename + ".m3u8");
+    //   })
+    //   .run();
   });
 
   socket.on("play", (roomId, song, position) => {

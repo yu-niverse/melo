@@ -41,13 +41,12 @@ const Room = () => {
   }, [id]);
 
   useEffect(() => {
-    socket.on("play", (song, path, position) => {
+    socket.on("play", (song, position) => {
       console.log("play", song);
       // load and play song
-      path = process.env.REACT_APP_BASE_URL + path;
       if (HLS.isSupported()) {
         var hls = new HLS();
-        hls.loadSource(path);
+        hls.loadSource(song.url);
         hls.attachMedia(audioRef.current);
         hls.on(HLS.Events.MANIFEST_PARSED, function () {
           if (position !== undefined) {
@@ -62,7 +61,7 @@ const Room = () => {
       } else if (
         audioRef.current.canPlayType("application/vnd.apple.mpegurl")
       ) {
-        audioRef.current.src = path;
+        audioRef.current.src = song.url;
         audioRef.current.play();
         setCurrentSong({
           ...song,
