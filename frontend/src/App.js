@@ -7,6 +7,7 @@ import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Room from "./components/Room";
+import Join from "./components/Join";
 import socket from "./socket";
 import "./App.css";
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route element={<ProtectedRoute />}>
+              <Route path="/:id" element={<Join />} />
               <Route path="/room/:id" element={<Room />} />
             </Route>
           </Routes>

@@ -72,8 +72,21 @@ const PlaylistContent = (props) => {
                       <span className="playlist-subtitle">{song.artist}</span>
                     }
                     endItem={
-                      <div className="end-item-container">
-                        <Avatar className="end-avatar">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Avatar
+                          style={{
+                            color: "#333840",
+                            fontSize: "11px",
+                            width: "1rem",
+                            height: "1rem",
+                          }}
+                        >
                           {song.added_by[0]}
                         </Avatar>
                         <IconButton onClick={() => setOpenAddSongPanel(true)}>

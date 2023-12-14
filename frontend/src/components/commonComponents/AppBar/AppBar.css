@@ -1,5 +1,7 @@
 #app-bar {
-    height: 3.5rem;
+    position: absolute;
+    bottom: 0;
+    height: 4rem;
     width: 100%;
     background: rgba(40, 44, 50, 0.85);
 

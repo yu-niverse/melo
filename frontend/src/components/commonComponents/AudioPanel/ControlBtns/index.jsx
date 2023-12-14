@@ -56,12 +56,7 @@ const ControlBtns = (props) => {
           <RepeatBtn />
         </IconButton>
       ) : (
-        <IconButton
-          onClick={() => {
-            setOpenControlPanel(false);
-            setOpenQueuePanel(true);
-          }}
-        >
+        <IconButton>
           <QueueBtn />
         </IconButton>
       )}

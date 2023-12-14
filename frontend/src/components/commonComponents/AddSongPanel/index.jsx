@@ -2,6 +2,9 @@ import AvatarItem from "../AvatarItem";
 import Stack from "@mui/material/Stack";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox";
+import CircleIcon from "@mui/icons-material/Circle";
+import CircleUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
@@ -38,9 +41,12 @@ const AddSongPanel = (props) => {
               key={index}
               title={<span className="item-name">{playlist.name}</span>}
               avatar={
-                <div className="avatar-box playlist-avatar">
-                  <span>{playlist.name[0]}</span>
-                </div>
+                <Checkbox
+                  size="small"
+                  icon={<CircleUnchecked sx={{ color: "#f8f8eb", opacity: 0.6 }} />}
+                  checkedIcon={<CircleIcon />}
+                  sx={{ pl: 0, pr: 2 }}
+                />
               }
               subTitle={
                 <div className="playlist-subtitle">{`playlist • ${playlist.added_by}`}</div>
