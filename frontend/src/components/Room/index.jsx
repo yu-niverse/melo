@@ -89,7 +89,6 @@ const Room = () => {
         audioRef.current.currentTime = position;
       }
     });
-
   }, [socket]);
 
   const {
@@ -183,7 +182,9 @@ const Room = () => {
         ) : page === "search" ? (
           <SearchContent userRooms={userRooms} playlists={roomInfo.playlists} />
         ) : page === "analysis" ? (
-          <div>Analysis</div>
+          <div className="loading-container">
+            <CircularProgress color="inherit" />
+          </div>
         ) : (
           <div>Invite</div>
         )}

@@ -24,12 +24,9 @@ const SearchContent = (props) => {
     }
   }, [initSongList]);
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
-
   if (error) {
-    return <div>Error: {error.message}</div>;
+    console.log(error);
+    return <p>Error when fetching data</p>;
   }
 
   const handleSearchChange = (event) => {
@@ -42,38 +39,48 @@ const SearchContent = (props) => {
 
   return (
     <>
-      <TopBar title="Search" roomList={userRooms} />
-      <SearchBar
-        searchText={searchText}
-        handleSearchChange={handleSearchChange}
-      />
-      <div className="song-container">
-        <div className="song-container-title">Songs For You</div>
-        <Stack spacing={2} className="song-container-content">
-          {songList.map((song, index) => (
-            <AvatarItem
-              key={index}
-              title={<span className="item-name">{song.name}</span>}
-              avatar={
-                <div className="avatar-box playlist-avatar">
-                  <span>{song.name[0]}</span>
-                </div>
-              }
-              subTitle={<div className="playlist-subtitle">{song.artist}</div>}
-              endItem={
-                <IconButton onClick={() => setOpenAddSongPanel(true)}>
-                  <MoreHorizRoundedIcon sx={{ color: "#F8F8EB" }} />
-                </IconButton>
-              }
-            />
-          ))}
-        </Stack>
-      </div>
-      <AddSongPanel
-        openPanel={openAddSongPanel}
-        setOpenPanel={setOpenAddSongPanel}
-        playlists={playlists}
-      />
+      {
+        isLoading ? (
+          <div className="loading-container">
+            <CircularProgress color="inherit" />
+          </div>
+        ) : (
+          <>
+          <TopBar title="Search" roomList={userRooms} />
+          <SearchBar
+            searchText={searchText}
+            handleSearchChange={handleSearchChange}
+          />
+          <div className="song-container">
+            <div className="song-container-title">Songs For You</div>
+            <Stack spacing={2} className="song-container-content">
+              {songList.map((song, index) => (
+                <AvatarItem
+                  key={index}
+                  title={<span className="item-name">{song.name}</span>}
+                  avatar={
+                    <div className="avatar-box playlist-avatar">
+                      <span>{song.name[0]}</span>
+                    </div>
+                  }
+                  subTitle={<div className="playlist-subtitle">{song.artist}</div>}
+                  endItem={
+                    <IconButton onClick={() => setOpenAddSongPanel(true)}>
+                      <MoreHorizRoundedIcon sx={{ color: "#F8F8EB" }} />
+                    </IconButton>
+                  }
+                />
+              ))}
+            </Stack>
+          </div>
+          <AddSongPanel
+            openPanel={openAddSongPanel}
+            setOpenPanel={setOpenAddSongPanel}
+            playlists={playlists}
+          />
+          </>
+        )
+      }
     </>
   );
 };
