@@ -38,7 +38,7 @@ async function terminate() {
   }
 }
 
-// await init();
+await init();
 // const _path = ffmpegInstaller.path;
 // ffmpeg.setFfmpegPath(_path);
 
